@@ -1,41 +1,45 @@
 
-const loadCountries2 = () => {
+const loadCountries = () => {
     fetch('https://openapi.programming-hero.com/api/news/categories')
     .then(res => res.json())
-    .then(data => displayNews(data.data.news_category))
+    .then(data => displayCatagory(data.data.news_category))
 }
 
-const displayNews = (newses) => {
-    const newsContainer = document.getElementById('news-container');
-    newsContainer.innerHTML = ``;
+
+const displayCatagory = (newses) => {
+    console.log(newses)
+    const newsesContainer = document.getElementById('newses-container');
+    newsesContainer.innerHTML = ``;
+    
     newses.forEach(news => {
-        console.log(news.category_id);
+        //console.log(news);
         const newsDiv = document.createElement('div');
         newsDiv.classList.add('news');
 
         newsDiv.innerHTML = `
         <div class="d-inline">
-        <button onclick="loadCountries(${news.category_id})" class="btn p-2">${news.category_name}</button>
+        <button onclick="loadNews('${news.category_id}', '${news.category_name}')" class="btn p-2">${news.category_name}</button>
         </div>
         `
-            newsContainer.appendChild(newsDiv);
+            newsesContainer.appendChild(newsDiv);
        })
-
-   
-    
+       
 }
-loadCountries2()
 
-const loadCountries = (search) => {
-    console.log(search.toString());
-    fetch(`https://openapi.programming-hero.com/api/news/category/0${search}`)
+ const loadNews = (search, found) => {
+    fetch(`https://openapi.programming-hero.com/api/news/category/${search}`)
     .then(res => res.json())
-    .then(data => displayCountries(data.data))
-}
-const displayCountries = (countries) => {
-    //console.log(countries)
+    .then(data => displayNews(data.data, found))
+ }
+
+const displayNews = (countries, found) => {
     const countryContainer = document.getElementById('news-container');
-    //countryContainer.innerHTML = ``;
+    countryContainer.innerHTML = ``;
+    const totalNews = document.getElementById('total-news');
+    totalNews.innerText = `
+    ${countries.length}items found for category ${found}
+    `;
+
     countries.forEach(country => {
         console.log(country);
         const countryDiv = document.createElement('div');
@@ -50,14 +54,14 @@ const displayCountries = (countries) => {
                   <div class="col-md-8">
                     <div class="card-body">
                       <h5 class="card-title">${country.title}</h5>
-                      <p class="card-text">${country.details.slice(0, 200)}...</p>
+                      <p id="detail" class="card-text">${country.details.slice(0, 200)}...</p>
                       <div class="d-flex  align-items-center">
                       <div class="d-flex me-5 justify-content-center align-items-center">
                       <img src= ${country.author.img} class="img-thumbnail me-2" alt="" width="80px">
                       <h5>Name: ${country.author.name}</h5>
                       </div>
-                      ${country.total_view == 0? "<button>No View</button>": country.total_view}
-                      <button class="btn btn-primary ms-5 mx-4 my-2">Name: ${country.author.name}</button>
+                      ${country.total_view == null || 0? "<button><i class='fa-sharp fa-solid fa-eye'></i>No View</button>": country.total_view}<i class='fa-sharp fa-solid fa-eye'></i>
+                      <button onclick="viewAll('${country.details}')" class="btn btn-primary ms-5 mx-4 my-2">View All</button>
                       </div>
                     </div>
                   </div>
@@ -67,3 +71,10 @@ const displayCountries = (countries) => {
         countryContainer.appendChild(countryDiv);
     })
 }
+
+const viewAll = (viewDetail) => {
+    const Detail = document.getElementById('detail');
+    Detail.innerText = viewDetail;
+}
+
+loadCountries();
