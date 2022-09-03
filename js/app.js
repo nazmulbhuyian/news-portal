@@ -1,4 +1,5 @@
 
+//All Catagory ADD
 const loadNewses = () => {
     fetch('https://openapi.programming-hero.com/api/news/categories')
     .then(res => res.json())
@@ -25,6 +26,7 @@ const displayCatagory = (newses) => {
        
 }
 
+//News Detail Add
  const loadNews = (search, found) => {
     fetch(`https://openapi.programming-hero.com/api/news/category/${search}`)
     .then(res => res.json())
