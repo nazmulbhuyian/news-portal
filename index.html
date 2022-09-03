@@ -24,7 +24,7 @@
               </div>
             </div>
           </nav>
-          <div onclick="loadCountries2()" id="news-container" class="mt-5 container">
+          <div id="news-container" class="mt-5 container">
             
         </div>
     </header>
@@ -32,7 +32,30 @@
 
     
 
-    <main class="container">
+
+    <div class="modal fade" id="phoneDetailModal" tabindex="-1" aria-labelledby="phoneDetailModalLabell" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="phoneDetailModalLabel"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="phone-detail" class="modal-body">
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+    <!-- <main class="container">
         <button  type="button" class="btn me-2 fs-4">Home</button>
         <button onclick="loadCountriesBraking()"  type="button" class="btn me-2 fs-4">Breking News</button>
         <button  type="button" class="btn me-2 fs-4">Regular News</button>
@@ -54,7 +77,7 @@
               </div>
         </section>
 
-    </main>
-    <script src="js/style.js"></script>
+    </main> -->
+    <script src="js/app.js"></script>
 </body>
 </html>

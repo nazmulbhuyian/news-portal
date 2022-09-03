@@ -7,17 +7,19 @@ const loadCountries2 = () => {
 
 const displayNews = (newses) => {
     const newsContainer = document.getElementById('news-container');
-      for(const news of newses){
+    newsContainer.innerHTML = '';
+    newses.forEach(news => {
+        console.log(news.category_id);
         const newsDiv = document.createElement('div');
         newsDiv.classList.add('news');
 
         newsDiv.innerHTML = `
-        <div onclick="loadCountries(${news.category_id})" class="d-inline">
-        <button class="btn p-2">${news.category_name}</button>
+        <div class="d-inline">
+        <button onclick="loadCountries(${news.category_id})" class="btn p-2">${news.category_name}</button>
         </div>
         `
             newsContainer.appendChild(newsDiv);
-       }
+       })
 
    
     
@@ -38,14 +40,16 @@ const displayNews = (newses) => {
 //     .then(res => res.json())
 //     .then(data => displayCountries(data.data))
 // }
-const loadCountries = (searchText) => {
-    fetch(`https://openapi.programming-hero.com/api/news/category/${searchText}`)
+const loadCountries = (search) => {
+    console.log(search.toString());
+    fetch(`https://openapi.programming-hero.com/api/news/category/0${search}`)
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => displayCountries(data.data))
 }
 const displayCountries = (countries) => {
-
-    const countryContainer = document.getElementById('countries-container');
+    //console.log(countries)
+    const countryContainer = document.getElementById('news-container');
+    
     countries.forEach(country => {
         console.log(country);
         const countryDiv = document.createElement('div');
@@ -62,14 +66,14 @@ const displayCountries = (countries) => {
                   <div class="col-md-8">
                     <div class="card-body">
                       <h5 class="card-title">${country.title}</h5>
-                      <p class="card-text">${country.details}</p>
+                      <p class="card-text">${country.details.slice(0, 200)}...</p>
                       <div class="d-flex  align-items-center">
                       <div class="d-flex me-5 justify-content-center align-items-center">
                       <img src= ${country.author.img} class="img-thumbnail me-2" alt="" width="80px">
                       <h5>Name: ${country.author.name}</h5>
                       </div>
                       ${country.total_view == 0? "<button class='viewPop'>No View</button>": country.total_view}
-                      <button class="btn btn-primary ms-5 mx-4 my-2">Details</button>
+                      <button onclick="loadDetail(${country.category_id})" class="btn btn-primary ms-5 mx-4 my-2">Name: ${country.author.name}</button>
                       </div>
                     </div>
                   </div>
@@ -82,3 +86,19 @@ const displayCountries = (countries) => {
 }
 
 
+const loadDetail = async (id) => {
+    const url = `https://openapi.programming-hero.com/api/news/category/0${id}`
+    const res = await fetch(url)
+    const data = await res.json();
+    displayPhoneDetails(data.data)
+    
+}
+
+const displayPhoneDetails = phone => {
+    console.log(phone)
+    const phoneDetail = document.getElementById('phone-detail');
+    phoneDetail.innerHTML = `
+    <p>Release Date: ${phone.title ? phone.title : 'nothing releaseDate found'}</p>
+    
+    `
+}
