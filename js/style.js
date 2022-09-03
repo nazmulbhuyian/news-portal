@@ -1,19 +1,13 @@
 
 
-const loadCountries = async() => {
+const loadEntertainment = async() => {
     const url = 'https://openapi.programming-hero.com/api/news/category/01'
     const res = await fetch(url)
     const data = await res.json()
-    displayCountries(data.data)
+    displayEntertainment(data.data)
 }
 
-// const loadCountries = () => {
-//     fetch('https://openapi.programming-hero.com/api/news/category/01')
-//     .then(res => res.json())
-//     .then(data => displayCountries(data.data))
-// }
-
-const displayCountries = (countries) => {
+const displayEntertainment = (countries) => {
 
     const countryContainer = document.getElementById('countries-container');
     countries.forEach(country => {
