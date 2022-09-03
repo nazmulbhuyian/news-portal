@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/13ed2a3620.js" crossorigin="anonymous"></script>
+    <style>
+        .news{
+            display: inline;
+        };
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container">
+              <a class="navbar-brand">News Head</a>
+              <div class="d-flex">
+                <button onclick="loadCountries2()" class="btn me-2">News</button>
+                <button class="btn ">Blog</button>
+              </div>
+            </div>
+          </nav>
+          <div onclick="loadCountries2()" id="news-container" class="mt-5 container">
+            
+        </div>
+    </header>
+    <hr class="container">
+
+    
+
+    <main class="container">
+        <button  type="button" class="btn me-2 fs-4">Home</button>
+        <button  type="button" class="btn me-2 fs-4">Breking News</button>
+        <button  type="button" class="btn me-2 fs-4">Regular News</button>
+        <button  type="button" class="btn me-2 fs-4">International News</button>
+        <button  type="button" class="btn fs-4">Sports</button>
+        <button onclick="loadCountries()" type="button" class="btn btn-link me-2 fs-4">Entertainment</button>
+        <button  type="button" class="btn  fs-4">Culture</button>
+        <button   type="button" class="btn  fs-4">Arts</button>
+        <button  type="button" class="btn fs-4">All News</button>
+        <div id="countries-container" class="mt-5">
+            
+        </div>
+
+
+
+    </main>
+
+    <script src="js/style.js"></script>
+</body>
+</html>
