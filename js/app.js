@@ -56,9 +56,10 @@ const displayNews = (newsesDetail, found) => {
                       <div class="d-flex  align-items-center">
                       <div class="d-flex me-5 justify-content-center align-items-center">
                       <img src= ${newsDetail.author.img} class="img-thumbnail me-2" alt="" width="80px">
-                      <h5>Name: ${newsDetail.author.name}</h5>
+                      <h5>${newsDetail.author.name === null ? "No Author found": newsDetail.author.name}</h5>
                       </div>
-                      <button onclick="loadDetails('${newsDetail._id }')" class="btn btn-primary">View ID</button>
+                      ${newsDetail.total_view === 0 || newsDetail.total_view === null? "No View": newsDetail.total_view}M
+                      <button onclick="loadDetails('${newsDetail._id }')" class="ms-5 btn btn-primary">View ID</button>
                       </div>
                     </div>
                   </div>
@@ -79,4 +80,3 @@ const loadDetails = (id) => {
 };
 
 
-loadNewses();
