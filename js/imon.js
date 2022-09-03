@@ -18,7 +18,7 @@ const displayCatagory = (newses) => {
 
         newsDiv.innerHTML = `
         <div class="d-inline">
-        <button onclick="loadNews('${news.category_id}', '${news.category_name}')" class="btn p-2">${news.category_name}</button>
+        <button onclick="loadNews('${news.category_id}', '${news.category_name}')" class="btn p-4 fw-bold">${news.category_name}</button>
         </div>
         `
             newsesContainer.appendChild(newsDiv);
