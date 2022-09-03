@@ -1,69 +1,82 @@
 
-const loadCountries2 = () => {
+const loadNewses = () => {
     fetch('https://openapi.programming-hero.com/api/news/categories')
     .then(res => res.json())
-    .then(data => displayNews(data.data.news_category))
+    .then(data => displayCatagory(data.data.news_category))
 }
 
-const displayNews = (newses) => {
-    const newsContainer = document.getElementById('news-container');
-    newsContainer.innerHTML = ``;
+
+const displayCatagory = (newses) => {
+    const newsesContainer = document.getElementById('newses-container');
+    newsesContainer.innerHTML = ``;
+    
     newses.forEach(news => {
-        console.log(news.category_id);
+        //console.log(news);
         const newsDiv = document.createElement('div');
         newsDiv.classList.add('news');
 
         newsDiv.innerHTML = `
         <div class="d-inline">
-        <button onclick="loadCountries(${news.category_id})" class="btn p-2">${news.category_name}</button>
+        <button onclick="loadNews('${news.category_id}', '${news.category_name}')" class="btn p-4 fw-bold">${news.category_name}</button>
         </div>
         `
-            newsContainer.appendChild(newsDiv);
+            newsesContainer.appendChild(newsDiv);
        })
-
-   
-    
+       
 }
-loadCountries2()
 
-const loadCountries = (search) => {
-    console.log(search.toString());
-    fetch(`https://openapi.programming-hero.com/api/news/category/0${search}`)
+ const loadNews = (search, found) => {
+    fetch(`https://openapi.programming-hero.com/api/news/category/${search}`)
     .then(res => res.json())
-    .then(data => displayCountries(data.data))
-}
-const displayCountries = (countries) => {
-    //console.log(countries)
-    const countryContainer = document.getElementById('news-container');
-    //countryContainer.innerHTML = ``;
-    countries.forEach(country => {
-        console.log(country);
-        const countryDiv = document.createElement('div');
-        countryDiv.classList.add('country');
+    .then(data => displayNews(data.data, found))
+ }
 
-        countryDiv.innerHTML = `
+const displayNews = (newsesDetail, found) => {
+    const newsContainer = document.getElementById('news-container');
+    newsContainer.innerHTML = ``;
+    const totalNews = document.getElementById('total-news');
+    totalNews.innerText = `
+    ${newsesDetail.length}items found for category ${found}
+    `;
+
+    newsesDetail.forEach(newsDetail => {
+        const newsDiv = document.createElement('div');
+        newsDiv.classList.add('newsDetail');
+
+        newsDiv.innerHTML = `
             <div class="card mb-3">
                 <div class="row g-0">
                   <div class="col-md-4">
-                    <img src="${country?.image_url}" class="img-fluid rounded-start" alt=""  width="700px">
+                    <img src="${newsDetail?.image_url}" class="img-fluid rounded-start" alt=""  width="700px">
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
-                      <h5 class="card-title">${country.title}</h5>
-                      <p class="card-text">${country.details.slice(0, 200)}...</p>
+                      <h5 class="card-title">${newsDetail.title}</h5>
+                      <p id="detail" class="card-text">${newsDetail.details.slice(0, 200)}...</p>
                       <div class="d-flex  align-items-center">
                       <div class="d-flex me-5 justify-content-center align-items-center">
-                      <img src= ${country.author.img} class="img-thumbnail me-2" alt="" width="80px">
-                      <h5>Name: ${country.author.name}</h5>
+                      <img src= ${newsDetail.author.img} class="img-thumbnail me-2" alt="" width="80px">
+                      <h5>Name: ${newsDetail.author.name}</h5>
                       </div>
-                      ${country.total_view == 0? "<button>No View</button>": country.total_view}
-                      <button class="btn btn-primary ms-5 mx-4 my-2">Name: ${country.author.name}</button>
+                      <button onclick="loadDetails('${newsDetail._id }')" class="btn btn-primary">View ID</button>
                       </div>
                     </div>
                   </div>
+                  
                 </div>
             </div>
         `
-        countryContainer.appendChild(countryDiv);
+        newsContainer.appendChild(newsDiv);
     })
 }
+
+
+
+
+// Dispaly View Details
+const loadDetails = (id) => {
+  alert (id)
+};
+
+
+loadNewses();
